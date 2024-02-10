@@ -6,8 +6,8 @@ class Skills(db.Model):
     __tablename__ = 'skills'
 
     id = db.Column(db.Integer, primary_key=True)
-    skill = db.Column(db.String, unique=True)
+    skill = db.Column(db.String)
     description = db.Column(db.String)
 
     def __repr__(self):
-        return f'<Pet Owner {self.name}>'
+          return f'<Skills id={self.id}, skill={self.skill}, description={self.description}>'

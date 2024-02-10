@@ -3,22 +3,25 @@ from app import app, db
 from models import Skills
 
 def seed_database():
-    # Create an application context
     with app.app_context():
         # Create instances of Skills
-        skills = [
-            Skills(skill='Python', description='Software development skills'),
-            Skills(skill='React', description='Software development skills'),
-            Skills(skill='Flask', description='Software development skills'),
-            Skills(skill='HTML', description='Software development skills'),
-            Skills(skill='JavaScript', description='Analytical skills for data processing'),
-            Skills(skill='CSS', description='Software development skills'),
-            Skills(skill='SQLAlchemy', description='Software development skills'),
-            Skills(skill='API & RESTFUL API', description='Software development skills'),
+        skills_data = [
+            {'skill': 'Python', 'description': 'Software development skills'},
+            {'skill': 'React', 'description': 'Software development skills'},
+            {'skill': 'Flask', 'description': 'Software development skills'},
+            {'skill': 'HTML', 'description': 'Software development skills'},
+            {'skill': 'JavaScript', 'description': 'Analytical skills for data processing'},
+            {'skill': 'CSS', 'description': 'Software development skills'},
+            {'skill': 'SQLAlchemy', 'description': 'Software development skills'},
+            {'skill': 'API & RESTFUL API', 'description': 'Software development skills'},
         ]
 
-        # Add all instances to the database session
-        db.session.add_all(skills)
+        # Add unique instances to the database session
+        for skill_data in skills_data:
+            skill = Skills.query.filter_by(skill=skill_data['skill']).first()
+            if not skill:
+                new_skill = Skills(**skill_data)
+                db.session.add(new_skill)
 
         # Commit the changes to the database
         db.session.commit()
